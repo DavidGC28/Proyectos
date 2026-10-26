@@ -3,47 +3,58 @@ package com.krakedev.proyectos.entidades;
 import java.time.LocalDate;
 import java.util.List;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 
 @Entity
-@Table(name = "proyectos")
+@Table(name = "tareas")
 public class Tarea {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
 
-    @Column(nullable = false, length = 100)
-    private String nombre;
-
-    @Column(length = 250)
+    @Column(nullable = false, length = 200)
     private String descripcion;
 
     @Column(nullable = false)
-    private LocalDate fechaInicio;
+    private LocalDate fechaLimite;
 
-    @OneToMany(mappedBy = "proyecto")
-    @JsonIgnore
-    private List<Tarea> tareas;
+    @Column(nullable = false)
+    private double costoEstimado;
+
+    @ManyToOne
+    @JoinColumn(name = "proyecto_id", nullable = false)
+    private Proyecto proyecto;
+
+    @ManyToMany
+    @JoinTable(
+        name = "tarea_empleados",
+        joinColumns = @JoinColumn(name = "tarea_id"),
+        inverseJoinColumns = @JoinColumn(name = "empleado_id")
+    )
+    private List<Empleado> empleados;
 
     // Constructor vacío
     public Tarea() {
     }
 
-    // Constructor con parámetros (sin colecciones)
-    public Tarea(int id, String nombre, String descripcion, LocalDate fechaInicio) {
+    // Constructor con parámetros
+    public Tarea(int id, String descripcion, LocalDate fechaLimite, double costoEstimado, Proyecto proyecto, List<Empleado> empleados) {
         this.id = id;
-        this.nombre = nombre;
         this.descripcion = descripcion;
-        this.fechaInicio = fechaInicio;
+        this.fechaLimite = fechaLimite;
+        this.costoEstimado = costoEstimado;
+        this.proyecto = proyecto;
+        this.empleados = empleados;
     }
 
     // Getters y Setters
@@ -55,14 +66,6 @@ public class Tarea {
         this.id = id;
     }
 
-    public String getNombre() {
-        return nombre;
-    }
-
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
     public String getDescripcion() {
         return descripcion;
     }
@@ -71,19 +74,35 @@ public class Tarea {
         this.descripcion = descripcion;
     }
 
-    public LocalDate getFechaInicio() {
-        return fechaInicio;
+    public LocalDate getFechaLimite() {
+        return fechaLimite;
     }
 
-    public void setFechaInicio(LocalDate fechaInicio) {
-        this.fechaInicio = fechaInicio;
+    public void setFechaLimite(LocalDate fechaLimite) {
+        this.fechaLimite = fechaLimite;
     }
 
-    public List<Tarea> getTareas() {
-        return tareas;
+    public double getCostoEstimado() {
+        return costoEstimado;
     }
 
-    public void setTareas(List<Tarea> tareas) {
-        this.tareas = tareas;
+    public void setCostoEstimado(double costoEstimado) {
+        this.costoEstimado = costoEstimado;
+    }
+
+    public Proyecto getProyecto() {
+        return proyecto;
+    }
+
+    public void setProyecto(Proyecto proyecto) {
+        this.proyecto = proyecto;
+    }
+
+    public List<Empleado> getEmpleados() {
+        return empleados;
+    }
+
+    public void setEmpleados(List<Empleado> empleados) {
+        this.empleados = empleados;
     }
 }
