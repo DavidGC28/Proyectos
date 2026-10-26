@@ -34,11 +34,11 @@ public class Proyecto {
     @JsonIgnore
     private List<Tarea> tareas;
 
-    // Constructor vacío
+  
     public Proyecto() {
     }
 
-    // Constructor con parámetros (sin colecciones)
+    
     public Proyecto(int id, String nombre, String descripcion, LocalDate fechaInicio) {
         this.id = id;
         this.nombre = nombre;
@@ -46,7 +46,7 @@ public class Proyecto {
         this.fechaInicio = fechaInicio;
     }
 
-    // Getters y Setters
+
     public int getId() {
         return id;
     }
