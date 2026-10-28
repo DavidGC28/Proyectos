@@ -20,7 +20,7 @@ public class Tarea {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id; // Cambiado de int a Integer
 
     @Column(nullable = false, length = 200)
     private String descripcion;
@@ -48,7 +48,7 @@ public class Tarea {
     }
 
     // Constructor con parámetros
-    public Tarea(int id, String descripcion, LocalDate fechaLimite, double costoEstimado, Proyecto proyecto, List<Empleado> empleados) {
+    public Tarea(Integer id, String descripcion, LocalDate fechaLimite, double costoEstimado, Proyecto proyecto, List<Empleado> empleados) {
         this.id = id;
         this.descripcion = descripcion;
         this.fechaLimite = fechaLimite;
@@ -58,11 +58,11 @@ public class Tarea {
     }
 
     // Getters y Setters
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
